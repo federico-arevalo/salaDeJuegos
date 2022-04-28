@@ -11,6 +11,8 @@ import { TatetiComponent } from './page/tateti/tateti.component';
 import { NotFoundComponent } from './page/not-found/not-found.component';
 import { HomeComponent } from './page/home/home.component';
 import { QuiensoyComponent } from './page/quiensoy/quiensoy.component';
+import { RegisterComponent } from './page/register/register.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,13 +24,11 @@ import { QuiensoyComponent } from './page/quiensoy/quiensoy.component';
     TatetiComponent,
     NotFoundComponent,
     HomeComponent,
-    QuiensoyComponent
+    QuiensoyComponent,
+    RegisterComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/classes/user';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  redirigir() {
-    this.ruteo.navigateByUrl('juego/tateti');
+  login($event: any) {
+    $event.preventDefault();
+    // this.ruteo.navigateByUrl('juego/tateti');
+    // this.user = new User('', '');
+    // console.log(this.user);
   }
 }

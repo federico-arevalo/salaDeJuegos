@@ -1,0 +1,28 @@
+<main>
+  <form id="login_form" class="form_class">
+    <p class="titulo">Bienvenido a Sala de Juegos</p>
+    <p class="titulo">Registrarse</p>
+    <div class="form_div">
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister($event)">
+        <label>Correo Elecontrónico:</label>
+        <input class="field_class" type="text" autofocus />
+        <label>Contraseña:</label>
+        <input id="pass" class="field_class" type="password" />
+        <label>Confirmar contraseña:</label>
+        <input id="pass" class="field_class" type="password" />
+        <button
+          class="submit_class"
+          type="submit"
+          form="login_form"
+          (click)="onRegister($event)"
+        >
+          Registrarse
+        </button>
+      </form>
+
+      <p class="register__form--login">
+        ¿Ya tenés una cuenta? <a routerLink="/login">Login</a>
+      </p>
+    </div>
+  </form>
+</main>

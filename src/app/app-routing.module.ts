@@ -6,11 +6,13 @@ import { LoginComponent } from './page/login/login.component';
 import { NotFoundComponent } from './page/not-found/not-found.component';
 import { PreguntadosComponent } from './page/preguntados/preguntados.component';
 import { QuiensoyComponent } from './page/quiensoy/quiensoy.component';
+import { RegisterComponent } from './page/register/register.component';
 import { TatetiComponent } from './page/tateti/tateti.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
   { path: 'quiensoy', component: QuiensoyComponent },
   {
