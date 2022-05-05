@@ -15,21 +15,23 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="home"
+          <a
+            class="nav-link active"
+            aria-current="page"
+            routerLink="home"
+            *ngIf="isLoggedIn"
             >Home</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="login">Login</a>
+          <!-- [ngIf]="isLoggedIn" -->
+          <a class="nav-link" routerLink="login" *ngIf="!isLoggedIn">Login</a>
           <!-- <a class="nav-link" [routerLink]="">Anterior</a> -->
         </li>
-        <li class="nav-item">
-          <a class="nav-link">Logout</a>
-        </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="!isLoggedIn">
           <a class="nav-link" routerLink="register">Registrarse</a>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" *ngIf="isLoggedIn">
           <a
             class="nav-link dropdown-toggle"
             id="navbarDropdown"
@@ -59,15 +61,13 @@
           <!-- <a class="nav-link" [routerLink]="">Anterior</a> -->
         </li>
       </ul>
-      <form class="d-flex">
-        <input
-          class="form-control me-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button class="btn btn-outline-light" type="submit">Search</button>
-      </form>
+      <span class="navbar__bienvenido" *ngIf="isLoggedIn"
+        >Bienvenido: {{ currentUser }}</span
+      >
+
+      <button class="btn btn-danger" (click)="logout()" *ngIf="isLoggedIn">
+        Logout
+      </button>
     </div>
   </div>
 </nav>

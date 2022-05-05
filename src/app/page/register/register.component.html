@@ -3,13 +3,28 @@
     <p class="titulo">Bienvenido a Sala de Juegos</p>
     <p class="titulo">Registrarse</p>
     <div class="form_div">
-      <form [formGroup]="registerForm" (ngSubmit)="onRegister($event)">
+      <form [formGroup]="registerForm">
         <label>Correo Elecontrónico:</label>
-        <input class="field_class" type="text" autofocus />
+        <input
+          class="field_class"
+          type="text"
+          autofocus
+          formControlName="email"
+        />
         <label>Contraseña:</label>
-        <input id="pass" class="field_class" type="password" />
+        <input
+          id="pass"
+          class="field_class"
+          type="password"
+          formControlName="password"
+        />
         <label>Confirmar contraseña:</label>
-        <input id="pass" class="field_class" type="password" />
+        <input
+          id="pass"
+          class="field_class"
+          type="password"
+          formControlName="passwordConfirmed"
+        />
         <button
           class="submit_class"
           type="submit"

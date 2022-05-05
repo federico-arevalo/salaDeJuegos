@@ -14,6 +14,11 @@ import { QuiensoyComponent } from './page/quiensoy/quiensoy.component';
 import { RegisterComponent } from './page/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { environment } from './../environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AuthService } from './shared/services/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,8 +32,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     QuiensoyComponent,
     RegisterComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
-  providers: [],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+  ],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
