@@ -1,0 +1,46 @@
+<main
+  class="w-screen animated-background h-screen bg-gradient-to-r from-blue-500 via-blue-500 to-indigo-500"
+>
+  <form id="login_form" class="form_class" [formGroup]="loginForm">
+    <p class="titulo">Bienvenido a Sala de Juegos</p>
+    <p class="titulo">Iniciar sesión</p>
+    <div class="form_div">
+      <label>Correo Electrónico:</label>
+      <input
+        class="field_class"
+        placeholder="Correo electrónico"
+        type="text"
+        autofocus
+        formControlName="email"
+      />
+      <label>Contraseña:</label>
+      <input
+        id="pass"
+        placeholder="Contraseña"
+        class="field_class"
+        type="password"
+        formControlName="password"
+      />
+      <button
+        class="submit_class"
+        type="submit"
+        form="login_form"
+        (click)="onLogin($event)"
+      >
+        Entrar
+      </button>
+      <button class="submit_class" form="login_form" (click)="autocomplete()">
+        Autocompletar
+      </button>
+      <p class="login__form--register">
+        ¿No tenés una cuenta?
+        <a
+          routerLink="/register"
+          routerLinkActive="active-route"
+          class="registrate"
+          >Registrate</a
+        >
+      </p>
+    </div>
+  </form>
+</main>
