@@ -1,0 +1,54 @@
+<main
+  class="w-screen animated-background h-screen bg-gradient-to-r from-blue-500 via-blue-500 to-indigo-500"
+>
+  <div id="register_form" class="form_class">
+    <p class="titulo">Bienvenido a Sala de Juegos</p>
+    <p class="titulo">Registrarse</p>
+    <div class="form_div">
+      <form [formGroup]="registerForm">
+        <label for="email">Correo Electrónico:</label>
+        <input
+          placeholder="Correo electrónico"
+          id="email"
+          class="field_class"
+          type="text"
+          autofocus
+          formControlName="email"
+        />
+        <label for="pass">Contraseña:</label>
+        <input
+          placeholder="Contraseña"
+          id="pass"
+          class="field_class"
+          type="password"
+          formControlName="password"
+          name="password"
+        />
+        <label for="confirmPass">Confirmar contraseña:</label>
+        <input
+          placeholder="Confirmar contraseña"
+          id="confirmPass"
+          class="field_class"
+          type="password"
+          formControlName="confirmPass"
+          name="confirmPass"
+        />
+        <button
+          class="submit_class"
+          type="button"
+          form="register_form"
+          (click)="onRegister($event)"
+        >
+          Registrarse
+        </button>
+      </form>
+
+      <p class="register__form--login">
+        ¿Ya tenés una cuenta?
+        <a routerLink="/login" routerLinkActive="active-route" class="ingresa"
+          >Ingresa</a
+        >
+      </p>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,79 @@
+<div class="background flex flex-col md:flex-row items-center justify-evenly">
+  <h1
+    class="text-white font-medium text-4xl md:text-5xl leading-tight mb-2 mix-blend-difference"
+  >
+    Selecciona tu juego favorito
+  </h1>
+</div>
+<div class="container mx-auto px-12">
+  <div class="grid grid-rows-3 grid-flow-col gap-4 pt-10">
+    <div
+      class="row-start-1 row-end-4 cursor-pointer"
+      (click)="goToGame('mayormenor')"
+    >
+      <div
+        class="max-w-sm rounded overflow-hidden shadow-lg transition duration-300 hover:scale-105"
+      >
+        <img
+          class="w-full"
+          src="https://img.freepik.com/premium-vector/mathematical-symbols-set-hand-drawn_23-2148787623.jpg"
+          alt="Sunset in the mountains"
+        />
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2">MAYOR O MENOR</div>
+          <p class="text-gray-700 text-base">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Voluptatibus quia, nulla! Maiores et perferendis eaque,
+            exercitationem praesentium nihil.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row-start-1 row-end-4 cursor-pointer"
+      (click)="goToGame('preguntados')"
+    >
+      <div
+        class="max-w-sm rounded overflow-hidden shadow-lg transition duration-300 hover:scale-105"
+      >
+        <img
+          class="w-full"
+          src="https://w7.pngwing.com/pngs/228/958/png-transparent-trivia-crack-no-ads-fun-quizzes-smash-hit-print-ad-game-smiley-trivia-crack-thumbnail.png"
+          alt="Sunset in the mountains"
+        />
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2">PREGUNTADOS</div>
+          <p class="text-gray-700 text-base">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Voluptatibus quia, nulla! Maiores et perferendis eaque,
+            exercitationem praesentium nihil.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row-start-1 row-end-4 cursor-pointer"
+      (click)="goToGame('ahorcado')"
+    >
+      <div
+        class="max-w-sm rounded overflow-hidden shadow-lg transition duration-300 hover:scale-105"
+      >
+        <img
+          class="w-full"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLJvaNVx2_n0UEP2RWOSKc1HxJsQpymDTD-PfD001qEg&s"
+          alt="Sunset in the mountains"
+        />
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl mb-2">AHORCADO</div>
+          <p class="text-gray-700 text-base">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Voluptatibus quia, nulla! Maiores et perferendis eaque,
+            exercitationem praesentium nihil.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
