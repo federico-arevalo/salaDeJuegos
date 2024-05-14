@@ -1,0 +1,124 @@
+<div class="fixed bottom-0 right-0 mb-24 mr-5 z-5" *ngIf="isLoggedIn">
+  <button
+    (click)="hideChat()"
+    id="open-chat"
+    class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 flex items-center"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-6 h-6 mr-2"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+      ></path>
+    </svg>
+    Sala de chat
+  </button>
+</div>
+<div
+  id="chat-container"
+  class="fixed bottom-36 right-4 w-96"
+  [ngClass]="isChatHidden ? 'hidden' : ''"
+>
+  <div class="bg-white shadow-md rounded-lg max-w-lg w-full">
+    <div
+      class="p-4 border-b bg-blue-500 text-white rounded-t-lg flex justify-between items-center"
+    >
+      <p class="text-lg font-semibold">Chat</p>
+      <button
+        id="close-chat"
+        (click)="hideChat()"
+        class="text-gray-300 hover:text-gray-400 focus:outline-none focus:text-gray-400"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <div id="chatbox" class="p-4 h-80 overflow-y-auto">
+      <ng-container *ngIf="messages.length > 0"
+        ><div *ngFor="let message of messages">
+          <ng-container *ngIf="message.email === email; else elseBlock">
+            <div
+              class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end"
+            >
+              <div>
+                <div
+                  class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg"
+                >
+                  <p class="text-sm">
+                    {{ message.message }}
+                  </p>
+                </div>
+                <span class="text-xs text-gray-500 leading-none">{{
+                  message.createdAt | date : "medium"
+                }}</span>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #elseBlock
+            ><div class="flex w-full mt-2 space-x-3 max-w-xs">
+              <div
+                class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300"
+              ></div>
+              <div>
+                <div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
+                  <p class="text-cyan-700 pb-1">{{ message.email }}</p>
+                  <p class="text-sm">
+                    {{ message.message }}
+                  </p>
+                </div>
+                <span class="text-xs text-gray-500 leading-none">{{
+                  message.createdAt | date : "medium"
+                }}</span>
+              </div>
+            </div></ng-template
+          >
+        </div></ng-container
+      >
+    </div>
+    <div class="p-4 border-t flex">
+      <input
+        id="user-input"
+        type="text"
+        placeholder="Escribe tu mensaje"
+        class="w-full px-3 py-2 border rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        [(ngModel)]="message"
+        (keydown.enter)="sendMessage()"
+      />
+      <button
+        id="send-button"
+        (click)="sendMessage()"
+        class="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 transition duration-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          class="h-6 w-6 ml-2 transform rotate-90"
+        >
+          <path
+            d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>

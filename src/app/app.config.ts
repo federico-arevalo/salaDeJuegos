@@ -7,8 +7,10 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getDatabase, provideDatabase } from '@angular/fire/database';
 
-const firebase = {
+export const firebase = {
   apiKey: 'AIzaSyB7LEFFtXHKQz3RlMUCafXxbbbvxY2Po3I',
   authDomain: 'federicoarevalosaladejuegos.firebaseapp.com',
   projectId: 'federicoarevalosaladejuegos',
@@ -45,5 +47,8 @@ export const appConfig: ApplicationConfig = {
         appId: '1:479732795335:web:dd64887a06d50e6fe77be2',
       },
     },
+    importProvidersFrom(provideAuth(() => getAuth())),
+    importProvidersFrom(provideFirestore(() => getFirestore())),
+    importProvidersFrom(provideDatabase(() => getDatabase())),
   ],
 };
