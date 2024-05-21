@@ -32,14 +32,29 @@ export const routes: Routes = [
             (m) => m.MayorMenorComponent
           ),
       },
-      // { path: '', component: GamesComponent },
-      // { path: 'preguntados', component: PreguntadosComponent },
-      // { path: 'tateti', component: TatetiComponent },
-      // { path: '**', component: NotFoundComponent },
-      // { path: '**', redirectTo: '/', pathMatch: 'full' },//con esto podemos redireccionar
+      {
+        path: 'preguntados',
+        loadComponent: () =>
+          import('./components/games/preguntados/preguntados.component').then(
+            (m) => m.PreguntadosComponent
+          ),
+      },
+      {
+        path: 'ahorcado',
+        loadComponent: () =>
+          import('./components/games/ahorcado/ahorcado.component').then(
+            (m) => m.AhorcadoComponent
+          ),
+      },
+      {
+        path: 'mijuego',
+        loadComponent: () =>
+          import('./components/games/juego-propio/juego-propio.component').then(
+            (m) => m.JuegoPropioComponent
+          ),
+      },
     ],
     canActivate: [authGuard],
-  }, //la barra en juego es opcional, si la pones no anda
-  // { path: 'juego/tateti', component: TatetiComponent},
+  },
   { path: '**', component: NotFoundComponent },
 ];

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { AuthService } from '../../shared/services/auth/auth.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-chat',
@@ -19,6 +20,8 @@ export class ChatComponent {
   private sub!: Subscription;
   public email;
   public isChatHidden = true;
+
+  moment = moment;
 
   constructor(
     private chatService: ChatService,
@@ -39,7 +42,9 @@ export class ChatComponent {
     return this.auth.isLoggedIn;
   }
 
-  hideChat() {
+  toggleChat() {
+    console.log(moment.duration().humanize());
+    this.email = JSON.parse(localStorage.getItem('user')!).email;
     this.isChatHidden = !this.isChatHidden;
 
     let col = collection(this.firestore, 'messages');
@@ -48,8 +53,10 @@ export class ChatComponent {
 
     if (!this.isChatHidden) {
       this.sub = observable.subscribe((respuesta: any) => {
-        this.messages = respuesta;
-        console.log(respuesta);
+        this.messages = respuesta.sort(
+          (a: any, b: any) => a.createdAt - b.createdAt
+        );
+        console.log(this.messages);
       });
     } else {
       this.sub.unsubscribe();

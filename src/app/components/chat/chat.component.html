@@ -1,6 +1,6 @@
 <div class="fixed bottom-0 right-0 mb-24 mr-5 z-5" *ngIf="isLoggedIn">
   <button
-    (click)="hideChat()"
+    (click)="toggleChat()"
     id="open-chat"
     class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300 flex items-center"
   >
@@ -25,6 +25,7 @@
   id="chat-container"
   class="fixed bottom-36 right-4 w-96"
   [ngClass]="isChatHidden ? 'hidden' : ''"
+  *ngIf="isLoggedIn"
 >
   <div class="bg-white shadow-md rounded-lg max-w-lg w-full">
     <div
@@ -33,7 +34,7 @@
       <p class="text-lg font-semibold">Chat</p>
       <button
         id="close-chat"
-        (click)="hideChat()"
+        (click)="toggleChat()"
         class="text-gray-300 hover:text-gray-400 focus:outline-none focus:text-gray-400"
       >
         <svg
@@ -67,9 +68,9 @@
                     {{ message.message }}
                   </p>
                 </div>
-                <span class="text-xs text-gray-500 leading-none">{{
-                  message.createdAt | date : "medium"
-                }}</span>
+                <span class="text-xs text-gray-500 leading-none"
+                  >{{ message.createdAt.seconds * 1000 | date : "medium" }}
+                </span>
               </div>
             </div>
           </ng-container>
@@ -86,7 +87,7 @@
                   </p>
                 </div>
                 <span class="text-xs text-gray-500 leading-none">{{
-                  message.createdAt | date : "medium"
+                  message.createdAt.seconds * 1000 | date : "medium"
                 }}</span>
               </div>
             </div></ng-template

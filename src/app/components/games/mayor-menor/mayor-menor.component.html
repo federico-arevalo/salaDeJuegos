@@ -1,88 +1,82 @@
 <div
+  id="alert-additional-content-1"
+  class="absolute myAlert text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+  role="alert"
+  [ngClass]="showAlert ? '' : 'hidden'"
+>
+  <div class="flex items-center">
+    <svg
+      class="flex-shrink-0 w-4 h-4 me-2"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+      />
+    </svg>
+    <span class="sr-only">Info</span>
+    <h3 class="text-lg font-medium">{{ this.alertTitle }}</h3>
+  </div>
+  <div class="mt-2 mb-4 text-sm">{{ this.alertContent }}</div>
+
+  <button
+    type="button"
+    class="text-white w-auto bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+    (click)="reiniciarJuego()"
+  >
+    Jugar otra vez
+  </button>
+</div>
+
+<div
   class="container-fluid"
   style="margin-top: 1rem; margin-bottom: 1rem; padding: 20px"
 >
-  <div class="row" align="center">
-    <div class="col-6">
-      <img
-        src="../../../../assets/images/carta.jpg"
-        width="90%"
-        height="100%"
-        style="max-width: 230px"
-        alt="Card image"
-      />
-    </div>
-
-    <div class="col-6">
-      <div
-        style="
-          width: 90%;
-          height: 100%;
-          max-width: 230px;
-          background-color: white;
-        "
-      >
-        <p style="font-size: 3cm">{{ numeroAleatorio }}</p>
-      </div>
+  <div class="flex justify-center">
+    <img
+      class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
+      src="../../../../assets/images/carta.jpg"
+      alt=""
+    />
+    <div class="flex flex-col justify-between p-4 leading-normal">
+      <h5 class="mb-2 text-2xl font-bold tracking-tight">
+        Adivina si la siguiente carta es mayor o menor
+      </h5>
+      <h5 class="mb-2 text-2xl font-bold tracking-tight">
+        Tu puntuacion: {{ puntuacion }}
+      </h5>
+      <p class="text-9xl">{{ numeroAleatorio }}</p>
     </div>
   </div>
 
-  <div class="row">
-    <div class="container" id="pedrito" style="padding-top: 10px"></div>
+  <div class="flex justify-center">
+    <button
+      id="btnMenor"
+      type="button"
+      class="mr-3 px-6 py-3.5 text-base font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 disabled:cursor-not-allowed disabled:bg-red-400 disabled:pointer-events-none"
+      (click)="esMenor()"
+    >
+      MENOR
+    </button>
+    <button
+      id="btnMayor"
+      type="button"
+      class="px-6 py-3.5 text-base font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 disabled:cursor-not-allowed disabled:bg-red-400 disabled:pointer-events-none"
+      (click)="esMayor()"
+    >
+      MAYOR
+    </button>
   </div>
 
-  <div class="row">
-    <div class="col" align="center">
-      <h3>Puntuacion:</h3>
-      <h1
-        style="
-          height: 50px;
-          width: 50px;
-          border-radius: 5%;
-          background-color: burlywood;
-        "
-      >
-        {{ puntuacion }}
-      </h1>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <p>La siguiente carta es....</p>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <button
-        class="bttn-jelly bttn-md bttn-danger"
-        id="btnMenor"
-        (click)="esMenor()"
-      >
-        MENOR
-      </button>
-    </div>
-
-    <div class="col">
-      <button
-        class="bttn-jelly bttn-md bttn-danger"
-        id="btnMayor"
-        (click)="esMayor()"
-      >
-        MAYOR
-      </button>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <button
-        class="bttn-jelly bttn-md bttn-success"
-        (click)="ReiniciarJuego()"
-      >
-        Nuevo Juego
-      </button>
-    </div>
+  <div class="flex justify-center m-10">
+    <button
+      type="button"
+      class="px-6 py-3.5 text-base font-medium text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      (click)="reiniciarJuego()"
+    >
+      Reiniciar Juego
+    </button>
   </div>
 </div>

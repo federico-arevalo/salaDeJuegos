@@ -9,6 +9,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
+import { provideHttpClient } from '@angular/common/http';
 
 export const firebase = {
   apiKey: 'AIzaSyB7LEFFtXHKQz3RlMUCafXxbbbvxY2Po3I',
@@ -21,6 +22,7 @@ export const firebase = {
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(),
     provideRouter(routes),
     provideClientHydration(),
     importProvidersFrom(
