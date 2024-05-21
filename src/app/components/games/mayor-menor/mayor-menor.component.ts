@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mayor-menor',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './mayor-menor.component.html',
   styleUrl: './mayor-menor.component.scss',
 })
@@ -12,6 +13,10 @@ export class MayorMenorComponent implements OnInit {
   numeroAleatorio: number;
   segundoNumero: number;
   puntuacion: number;
+
+  alertTitle: string = '';
+  alertContent: string = '';
+  showAlert: boolean = false;
 
   constructor(private router: Router) {
     this.numeroAleatorio = this.getRandom();
@@ -50,27 +55,18 @@ export class MayorMenorComponent implements OnInit {
   }
 
   apareceAlert() {
-    let espacio = <HTMLElement>document.getElementById('pedrito');
+    this.alertTitle = 'PERDISTE';
+    this.alertContent = `Has perdido esta partida. El valor de la carta era ${this.puntuacion}`;
 
-    espacio.innerHTML =
-      `<div class="bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3" role="alert">
-      <h4 class="alert-heading">Juego Terminado!!</h4>
-      <hr>
-      <p>la carta era ` +
-      this.segundoNumero +
-      `</p>
-      <p>Has hecho ` +
-      this.puntuacion +
-      ` puntos.</p>
-      </div>`;
+    this.showAlert = true;
 
     this.desabilitarBotones();
   }
 
-  ReiniciarJuego() {
-    this.numeroAleatorio = this.getRandom();
-    this.segundoNumero = this.getRandom();
-    this.puntuacion = 0;
+  reiniciarJuego() {
+    this.router
+      .navigateByUrl('refresh', { skipLocationChange: true })
+      .then(() => this.router.navigate(['juegos/mayormenor']));
   }
 
   desabilitarBotones() {

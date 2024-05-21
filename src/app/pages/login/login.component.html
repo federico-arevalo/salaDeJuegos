@@ -1,10 +1,11 @@
 <main
   class="w-screen animated-background h-screen bg-gradient-to-r from-blue-500 via-blue-500 to-indigo-500"
 >
-  <form id="login_form" class="form_class" [formGroup]="loginForm">
-    <p class="titulo">Bienvenido a Sala de Juegos</p>
-    <p class="titulo">Iniciar sesión</p>
-    <div class="form_div">
+  <div class="form_div">
+    <form id="login_form" class="form_class" [formGroup]="loginForm">
+      <p class="titulo">Bienvenido a Sala de Juegos</p>
+      <p class="titulo">Iniciar sesión</p>
+
       <div
         class="alert_ flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:border-red-800"
         role="alert"
@@ -82,9 +83,10 @@
           routerLink="/register"
           routerLinkActive="active-route"
           class="registrate"
+          href="/register"
           >Registrate</a
         >
       </p>
-    </div>
-  </form>
+    </form>
+  </div>
 </main>

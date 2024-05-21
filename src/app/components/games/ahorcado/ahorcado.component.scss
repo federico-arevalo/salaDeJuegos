@@ -1,0 +1,39 @@
+.btnKeyboard {
+  width: 3em;
+  height: 3em;
+}
+
+.myAlert {
+  margin-top: 200px;
+  margin-left: 800px;
+  padding: 30px;
+}
+
+.letras {
+  font-size: 3em;
+  color: antiquewhite;
+}
+
+.col {
+  padding: 5px;
+}
+
+.bttn-fill:disabled {
+  border-radius: 5px;
+  box-shadow: 0 1px 8px rgba(58, 51, 53, 0.3);
+  color: #fff;
+  -webkit-transition: all 0.5s cubic-bezier(0.02, 0.01, 0.47, 1);
+  transition: all 0.5s cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+
+.bttn-fill:disabled:before {
+  border-radius: 5px;
+  opacity: 1;
+  -webkit-transition: opacity 0.2s ease-in, -webkit-transform 0.2s ease-in;
+  transition: opacity 0.2s ease-in, -webkit-transform 0.2s ease-in;
+  transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+  transition: transform 0.2s ease-in, opacity 0.2s ease-in,
+    -webkit-transform 0.2s ease-in;
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
+}

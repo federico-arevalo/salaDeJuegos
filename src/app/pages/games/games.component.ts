@@ -17,7 +17,7 @@ export class GamesComponent {
   constructor(private router: Router) {}
 
   goToGame(id: string): void {
-    console.log(id);
+    console.log('voy a', id);
     this.router.navigate(['/juegos/' + id]);
   }
 }
