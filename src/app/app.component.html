@@ -1,7 +1,7 @@
 <div class="flex flex-col h-screen justify-between">
   <app-menu></app-menu>
 
-  <div [@routeTransition]="route.snapshot.data" style="display: contents">
+  <div [@routeTransition]="route.snapshot.data" class="contents">
     <router-outlet></router-outlet>
   </div>
 
