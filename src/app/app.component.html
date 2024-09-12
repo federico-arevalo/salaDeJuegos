@@ -1,12 +1,10 @@
-<app-menu></app-menu>
+<div class="flex flex-col h-screen justify-between">
+  <app-menu></app-menu>
 
-<!-- <app-login></app-login> -->
-<!-- <app-menu></app-menu> -->
-<!-- <app-juegos></app-juegos>
-<app-preguntados></app-preguntados>
-<app-tateti></app-tateti> -->
+  <div [@routeTransition]="route.snapshot.data" style="display: contents">
+    <router-outlet></router-outlet>
+  </div>
 
-<router-outlet></router-outlet>
-
-<app-footer></app-footer>
-<app-chat></app-chat>
+  <app-footer class="h-10 bg-blue-500"></app-footer>
+  <app-chat></app-chat>
+</div>
