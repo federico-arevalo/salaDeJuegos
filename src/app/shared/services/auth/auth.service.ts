@@ -8,6 +8,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { publishLast } from 'rxjs';
+import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,6 +18,7 @@ export class AuthService {
   isError: boolean = false;
 
   constructor(
+    public firestore: Firestore,
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
@@ -44,6 +46,11 @@ export class AuthService {
         // this.ngZone.run(() => {
         //   this.router.navigate(['home']);
         // });
+
+        //user logs code here
+        console.log(result);
+        this.setUserLogs(result.user?.email || email);
+
         this.SetUserData(result.user);
         // this.router.navigate(['home']);
         // this.router.navigateByUrl('/home');
@@ -58,10 +65,10 @@ export class AuthService {
         up and returns promise */
         // this.SendVerificationMail();
         this.SetUserData(result.user);
-      })
-      .catch((error) => {
-        window.alert(error.message);
       });
+    // .catch((error) => {
+    //   // window.alert(error.message);
+    // });
   }
   // Send email verfificaiton when new user sign up
   SendVerificationMail() {
@@ -134,5 +141,15 @@ export class AuthService {
       localStorage.removeItem('user');
       this.router.navigate(['login']);
     });
+  }
+
+  setUserLogs(user: any) {
+    const userLog = {
+      user: user,
+      fecha: new Date(),
+    };
+
+    let logins = collection(this.firestore, 'logins');
+    addDoc(logins, userLog);
   }
 }
