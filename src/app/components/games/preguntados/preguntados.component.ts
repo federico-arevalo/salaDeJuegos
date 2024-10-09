@@ -76,7 +76,6 @@ export class PreguntadosComponent {
         this.contador++;
       } while (this.contador < this.cantidadPreguntas);
 
-      console.log(this.preguntas);
       this.contador = 0;
     });
   }
@@ -84,6 +83,8 @@ export class PreguntadosComponent {
   seleccionarRespuesta(respuesta: string) {
     this.respuestaSeleccionada = respuesta;
     this.seleccionoRespuesta = true;
+
+    this.confirmarRespuesta();
   }
 
   confirmarRespuesta() {
@@ -128,6 +129,7 @@ export class PreguntadosComponent {
   }
 
   reset() {
+    this.preguntaActual = 0;
     this.respuestasCorrectas = 0;
     this.respuestasIncorrectas = 0;
     this.seleccionoRespuesta = false;

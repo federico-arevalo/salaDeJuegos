@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   BehaviorSubject,
   fromEvent,
@@ -10,6 +10,7 @@ import {
 import { distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
 import { GameFieldComponent } from './game-field/game-field.component';
 import { SnakeComponent } from './snake/snake.component';
+import { PuntajeService } from '../../../shared/services/puntaje/puntaje.service';
 
 interface GameState {
   width: number;
@@ -39,12 +40,14 @@ enum FieldType {
   templateUrl: './juego-propio.component.html',
   styleUrl: './juego-propio.component.scss',
 })
-export class JuegoPropioComponent implements OnInit {
+export class JuegoPropioComponent implements OnInit, OnDestroy {
   game$!: BehaviorSubject<GameState>;
   keyDown$!: Observable<string>;
   tick$!: Observable<number>;
   direction$ = new BehaviorSubject<Direction>(Direction.RIGHT);
   lost$ = new Subject<void>();
+
+  constructor(private puntajeService: PuntajeService) {}
 
   ngOnInit(): void {
     this.keyDown$ = fromEvent<KeyboardEvent>(document, 'keydown').pipe(
@@ -169,6 +172,8 @@ export class JuegoPropioComponent implements OnInit {
               break;
             case FieldType.SNAKE:
               game.lost = true;
+              console.log('mis puntos: ', game.snakePos.length);
+              this.puntajeService.sendPuntaje('Snake', game.snakePos.length);
           }
 
           return game;
@@ -182,6 +187,10 @@ export class JuegoPropioComponent implements OnInit {
           this.lost$.next();
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.game$.unsubscribe();
   }
 
   moveUp() {

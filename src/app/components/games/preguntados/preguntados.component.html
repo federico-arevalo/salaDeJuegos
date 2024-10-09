@@ -1,13 +1,40 @@
-<div
-  class="absolute p-4 mt-6 text-sm rounded-lg text-white"
-  role="alert"
-  *ngIf="showAlert"
-  [ngClass]="isRight ? 'bg-green-600' : 'bg-red-600'"
->
-  {{ alertContent }}
-</div>
 <div class="preguntas-container">
-  <div *ngIf="preguntaActual < preguntas.length" class="pregunta-card">
+  <!-- ALERT -->
+  <div
+    id="alert-additional-content-1"
+    class="absolute myAlert text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+    role="alert"
+    [ngClass]="partidaTerminada && !showAlert ? '' : 'hidden'"
+  >
+    <div class="flex items-center">
+      <svg
+        class="flex-shrink-0 w-4 h-4 me-2"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+      >
+        <path
+          d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+        />
+      </svg>
+      <span class="sr-only">Info</span>
+      <h3 class="text-lg font-medium">La partida terminó</h3>
+    </div>
+    <div class="mt-2 mb-4 text-sm">
+      Tu puntaje fue de: {{ this.respuestasCorrectas }}. ¿Querés jugar otra vez?
+    </div>
+
+    <button
+      type="button"
+      class="text-white w-auto bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      (click)="reset()"
+    >
+      Jugar otra vez
+    </button>
+  </div>
+
+  <div class="pregunta-card">
     <h1 class="text-3xl mb-1">
       Pregunta {{ preguntaActual + 1 }}: ¿Cuál es este país?
     </h1>
@@ -17,28 +44,25 @@
       class="flag-image"
     />
     <div class="pregunta-text">
-      <p>
+      <p id="respuestasTitulo">
         Respuestas correctas: {{ respuestasCorrectas }} - Respuestas
         Incorrectas: {{ respuestasIncorrectas }}
       </p>
-      <ul
+
+      <div
+        *ngIf="!showAlert; else alert"
         class="flex flex-col items-stretch border-solid border-2 text-left border-slate-500 rounded"
       >
-        <li
+        <button
+          [disabled]="partidaTerminada"
           (click)="seleccionarRespuesta(respuesta)"
           *ngFor="let respuesta of preguntas[preguntaActual].todasLasRespuesta"
-          [class.selected]="respuesta === respuestaSeleccionada"
+          class="text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br disabled:from-gray-600 disabled:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm p-3 text-center m-2"
         >
           {{ respuesta }}
-        </li>
-      </ul>
-      <button
-        (click)="confirmarRespuesta()"
-        *ngIf="!partidaTerminada"
-        class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-      >
-        Confirmar
-      </button>
+        </button>
+      </div>
+
       <button
         (click)="reset()"
         *ngIf="partidaTerminada"
@@ -48,4 +72,14 @@
       </button>
     </div>
   </div>
+  <ng-template #alert>
+    <div
+      class="p-4 mt-[15%] ml-[5%] text-sm rounded-lg text-white animate-bounce"
+      role="alert"
+      *ngIf="showAlert"
+      [ngClass]="isRight ? 'bg-green-600' : 'bg-red-600'"
+    >
+      {{ alertContent }}
+    </div>
+  </ng-template>
 </div>
