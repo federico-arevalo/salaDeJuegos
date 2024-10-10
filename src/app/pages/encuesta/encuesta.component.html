@@ -1,8 +1,8 @@
 <section id="encuesta" class="py-1 bg-blueGray-50">
   <div
-    class="flex items-center absolute m-2 w-fit p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
+    class="flex items-center transition-[opacity] duration-[1000ms] absolute m-2 w-fit p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800"
     role="alert"
-    *ngIf="isAlertShown"
+    [ngClass]="isAlertShown ? 'opacity-100' : 'opacity-0'"
   >
     <svg
       class="flex-shrink-0 inline w-4 h-4 me-3"

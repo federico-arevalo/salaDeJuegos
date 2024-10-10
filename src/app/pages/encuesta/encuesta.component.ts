@@ -46,7 +46,7 @@ export class EncuestaComponent {
       msj: this.encuestaForm.value.msj,
     };
 
-    // this.encuestaService.sendEncuesta(encuesta);
+    this.encuestaService.sendEncuesta(encuesta);
     this.encuestaForm.reset();
     this.showAlert();
   }

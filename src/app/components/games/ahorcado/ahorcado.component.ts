@@ -147,7 +147,10 @@ export class AhorcadoComponent implements OnDestroy {
     this.teclado.forEach((_letter: string) => {
       (<HTMLButtonElement>document.getElementById(_letter)).disabled = false;
     });
-    this.puntajeService.sendPuntaje('Ahorcado', this.puntaje);
+    if (this.puntaje > 0) {
+      this.puntajeService.sendPuntaje('Ahorcado', this.puntaje);
+    }
+
     this.puntaje = 0;
   }
 
@@ -158,7 +161,9 @@ export class AhorcadoComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     console.log(this.puntaje);
-    this.puntajeService.sendPuntaje('Ahorcado', this.puntaje);
+    if (this.puntaje > 0) {
+      this.puntajeService.sendPuntaje('Ahorcado', this.puntaje);
+    }
   }
 
   didPlayerWin() {
