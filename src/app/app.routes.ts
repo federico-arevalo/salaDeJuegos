@@ -4,12 +4,16 @@ import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { authGuard } from './shared/guards/auth.guard';
+import { EncuestaComponent } from './pages/encuesta/encuesta.component';
+import { PuntajeComponent } from './pages/puntaje/puntaje.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'encuesta', component: EncuestaComponent, canActivate: [authGuard] },
+  { path: 'puntaje', component: PuntajeComponent, canActivate: [authGuard] },
   {
     path: 'quiensoy',
     loadComponent: () =>

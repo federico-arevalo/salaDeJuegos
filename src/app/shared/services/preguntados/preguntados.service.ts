@@ -32,7 +32,10 @@ export class PreguntadosService {
     let paisSeleccionado: any;
     do {
       this.rand = Math.floor(Math.random() * cantidadPaises);
-      paisSeleccionado = paises[this.rand].altSpellings;
+      paisSeleccionado = [
+        paises[this.rand].altSpellings[0],
+        paises[this.rand].translations.spa.common,
+      ];
     } while (paisSeleccionado.length <= 1);
 
     return paisSeleccionado;
@@ -45,7 +48,10 @@ export class PreguntadosService {
       this.rand = Math.floor(Math.random() * cantidadPaises);
 
       if (paises[this.rand].altSpellings.length > 1) {
-        paisSeleccionado.push(paises[this.rand].altSpellings);
+        paisSeleccionado.push([
+          paises[this.rand].altSpellings[0],
+          paises[this.rand].translations.spa.common,
+        ]);
         cantidad++;
       }
     } while (cantidad < 4);

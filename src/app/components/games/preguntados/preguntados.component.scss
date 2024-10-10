@@ -2,6 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: url("../../../../assets/images/fondoPreguntados.jpg");
+  background-size: cover;
+  height: 750px;
 }
 
 .pregunta-card {
@@ -15,8 +18,8 @@
 }
 
 .flag-image {
-  width: 100%;
-  height: auto;
+  width: 500px;
+  height: 250px;
   border-radius: 8px;
   margin-bottom: 8px;
 }
@@ -44,4 +47,13 @@
 
 .pregunta-text li.selected {
   background-color: #b3e5fc;
+}
+
+#respuestasTitulo {
+  background-color: white;
+}
+
+.myAlert {
+  margin: 15%;
+  padding: 100px;
 }

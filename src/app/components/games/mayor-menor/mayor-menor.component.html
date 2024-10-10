@@ -2,7 +2,7 @@
   id="alert-additional-content-1"
   class="absolute myAlert text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
   role="alert"
-  [ngClass]="showAlert ? '' : 'hidden'"
+  [ngClass]="isAlertShown ? '' : 'hidden'"
 >
   <div class="flex items-center">
     <svg
@@ -17,54 +17,78 @@
       />
     </svg>
     <span class="sr-only">Info</span>
-    <h3 class="text-lg font-medium">{{ this.alertTitle }}</h3>
+    <h3 class="text-lg font-medium">Perdiste</h3>
   </div>
-  <div class="mt-2 mb-4 text-sm">{{ this.alertContent }}</div>
+  <div class="mt-2 mb-4 text-sm">
+    Perdiste esta partida. El valor de la carta era {{ this.carta.value }}
+  </div>
 
   <button
     type="button"
     class="text-white w-auto bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-200 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    (click)="reiniciarJuego()"
+    (click)="saveGameAndRestart()"
   >
     Jugar otra vez
   </button>
 </div>
 
-<div
-  class="container-fluid"
-  style="margin-top: 1rem; margin-bottom: 1rem; padding: 20px"
->
+<div class="container-fluid p-40" id="mesa">
   <div class="flex justify-center">
     <img
       class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"
-      src="../../../../assets/images/carta.jpg"
-      alt=""
+      [src]="previousCarta.image"
     />
     <div class="flex flex-col justify-between p-4 leading-normal">
-      <h5 class="mb-2 text-2xl font-bold tracking-tight">
+      <h5 class="mb-2 text-2xl font-bold text-white tracking-tight">
         Adivina si la siguiente carta es mayor o menor
       </h5>
-      <h5 class="mb-2 text-2xl font-bold tracking-tight">
+      <div
+        class="flex items-center transition-[opacity] duration-[1000ms] p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800"
+        role="alert"
+        [ngClass]="isIgualValor ? 'opacity-100' : 'opacity-0'"
+      >
+        <svg
+          class="flex-shrink-0 inline w-4 h-4 me-3"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"
+          />
+        </svg>
+        <span class="sr-only">Info</span>
+        <div>
+          <span class="font-medium">Cartas de valor iguales!</span> Las cartas
+          eran del mismo valor no suma puntos.
+        </div>
+      </div>
+      <h5 class="mb-2 text-2xl font-bold text-white tracking-tight">
         Tu puntuacion: {{ puntuacion }}
       </h5>
-      <p class="text-9xl">{{ numeroAleatorio }}</p>
+      <h6 class="mb-2 font-bold text-white tracking-tight">
+        Cartas restantes del mazo: {{ quedan }}
+      </h6>
     </div>
   </div>
 
   <div class="flex justify-center">
     <button
+      [disabled]="isAlertShown"
       id="btnMenor"
       type="button"
       class="mr-3 px-6 py-3.5 text-base font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 disabled:cursor-not-allowed disabled:bg-red-400 disabled:pointer-events-none"
-      (click)="esMenor()"
+      (click)="validarCarta('menor')"
     >
       MENOR
     </button>
     <button
+      [disabled]="isAlertShown"
       id="btnMayor"
       type="button"
       class="px-6 py-3.5 text-base font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 disabled:cursor-not-allowed disabled:bg-red-400 disabled:pointer-events-none"
-      (click)="esMayor()"
+      (click)="validarCarta('mayor')"
     >
       MAYOR
     </button>
@@ -74,7 +98,7 @@
     <button
       type="button"
       class="px-6 py-3.5 text-base font-medium text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      (click)="reiniciarJuego()"
+      (click)="saveGameAndRestart()"
     >
       Reiniciar Juego
     </button>

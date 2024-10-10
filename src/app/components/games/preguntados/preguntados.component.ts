@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { PreguntadosConfig } from '../../../interfaces/preguntados';
 import { PreguntadosService } from '../../../shared/services/preguntados/preguntados.service';
+import { PuntajeService } from '../../../shared/services/puntaje/puntaje.service';
 
 @Component({
   selector: 'app-preguntados',
@@ -39,7 +40,10 @@ export class PreguntadosComponent {
   partidaTerminada: boolean = false;
   contadorPreguntas: number = 0;
 
-  constructor(private servicePreguntados: PreguntadosService) {}
+  constructor(
+    private servicePreguntados: PreguntadosService,
+    private puntajeService: PuntajeService
+  ) {}
 
   ngOnInit() {
     this.generarPreguntasJuego();
@@ -76,7 +80,6 @@ export class PreguntadosComponent {
         this.contador++;
       } while (this.contador < this.cantidadPreguntas);
 
-      console.log(this.preguntas);
       this.contador = 0;
     });
   }
@@ -84,6 +87,8 @@ export class PreguntadosComponent {
   seleccionarRespuesta(respuesta: string) {
     this.respuestaSeleccionada = respuesta;
     this.seleccionoRespuesta = true;
+
+    this.confirmarRespuesta();
   }
 
   confirmarRespuesta() {
@@ -123,11 +128,13 @@ export class PreguntadosComponent {
   comprobarFinJuego() {
     if (this.contadorPreguntas === this.cantidadPreguntas) {
       this.partidaTerminada = true;
+      this.puntajeService.sendPuntaje('Preguntados', this.respuestasCorrectas);
       //mostrar puntuacion
     }
   }
 
   reset() {
+    this.preguntaActual = 0;
     this.respuestasCorrectas = 0;
     this.respuestasIncorrectas = 0;
     this.seleccionoRespuesta = false;

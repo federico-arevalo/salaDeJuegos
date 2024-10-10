@@ -1,7 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { CartasService } from '../../../shared/services/cartas/cartas.service';
+import { PuntajeService } from '../../../shared/services/puntaje/puntaje.service';
 
+const CARTAS_VALUES = {
+  AS: 1,
+  '1': 1,
+  '2': 2,
+  '3': 3,
+  '4': 4,
+  '5': 5,
+  '6': 6,
+  '7': 7,
+  '8': 8,
+  '9': 9,
+  ACE: 10,
+  JACK: 11,
+  QUEEN: 12,
+  KING: 13,
+};
 @Component({
   selector: 'app-mayor-menor',
   standalone: true,
@@ -10,67 +27,94 @@ import { Router } from '@angular/router';
   styleUrl: './mayor-menor.component.scss',
 })
 export class MayorMenorComponent implements OnInit {
-  numeroAleatorio: number;
-  segundoNumero: number;
-  puntuacion: number;
+  isIgualValor: boolean = false;
+  isAlertShown: boolean = false;
+  puntuacion: number = 0;
+  mazo: any;
+  carta: any;
+  previousCarta: any;
+  quedan: number = 0;
 
-  alertTitle: string = '';
-  alertContent: string = '';
-  showAlert: boolean = false;
+  constructor(
+    private cartasService: CartasService,
+    private puntajeService: PuntajeService
+  ) {}
 
-  constructor(private router: Router) {
-    this.numeroAleatorio = this.getRandom();
-    this.segundoNumero = this.getRandom();
+  ngOnInit(): void {
+    this.getMazo();
+  }
+
+  validarCarta(eleccion: string) {
+    //if the values of the cards are the same we just show an alert
+    if (
+      CARTAS_VALUES[this.carta.value as keyof typeof CARTAS_VALUES] ===
+      CARTAS_VALUES[this.previousCarta.value as keyof typeof CARTAS_VALUES]
+    ) {
+      this.isIgualValor = true;
+      setTimeout(() => {
+        this.isIgualValor = false;
+      }, 4000);
+
+      this.getAnotherCarta();
+      return;
+    }
+
+    const isNextCartaMayor =
+      CARTAS_VALUES[this.carta.value as keyof typeof CARTAS_VALUES] >
+      CARTAS_VALUES[this.previousCarta.value as keyof typeof CARTAS_VALUES];
+
+    if (eleccion === 'mayor') {
+      if (isNextCartaMayor) {
+        this.puntuacion++;
+        this.getAnotherCarta();
+        return;
+      }
+    }
+
+    if (eleccion === 'menor') {
+      if (!isNextCartaMayor) {
+        this.puntuacion++;
+        this.getAnotherCarta();
+        return;
+      }
+    }
+
+    this.isAlertShown = true;
+    return;
+  }
+
+  getMazo() {
+    this.cartasService.crearMazo().then((mazo) => {
+      this.mazo = mazo;
+      this.quedan = mazo.quedan;
+      this.cartasService.traerCartas(mazo.mazoId, 2).then((cartas) => {
+        this.previousCarta = cartas.cards[0];
+        this.carta = cartas.cards[1];
+        this.quedan = cartas.remaining;
+      });
+    });
+  }
+
+  getAnotherCarta() {
+    if (this.quedan === 0) {
+      this.getMazo();
+    } else {
+      this.previousCarta = this.carta;
+      this.cartasService.traerCartas(this.mazo.mazoId, 1).then((cartas) => {
+        this.carta = cartas.cards[0];
+        this.quedan = cartas.remaining;
+        console.log(this.previousCarta.value);
+      });
+    }
+  }
+
+  saveGameAndRestart() {
+    this.isAlertShown = false;
+
+    // if(this.puntuacion > 0)
+    //   this.puntajeService.sendPuntaje('Mayor o Menor', this.puntuacion);
+
+    this.getMazo();
     this.puntuacion = 0;
-  }
-
-  ngOnInit(): void {}
-
-  getRandom() {
-    let numero = Math.floor(Math.random() * (13 - 1)) + 1;
-    //console.log(numero);
-    return Math.floor(numero);
-  }
-
-  esMenor() {
-    if (this.segundoNumero <= this.numeroAleatorio) {
-      this.puntuacion++;
-      this.numeroAleatorio = this.segundoNumero;
-      this.segundoNumero = this.getRandom();
-      //puntuacion +1 y asigno dos numeros nuevos
-    } else {
-      this.apareceAlert();
-    }
-  }
-
-  esMayor() {
-    if (this.segundoNumero >= this.numeroAleatorio) {
-      this.puntuacion++;
-      this.numeroAleatorio = this.segundoNumero;
-      this.segundoNumero = this.getRandom();
-      //puntuacion +1 y asigno dos numeros nuevos
-    } else {
-      this.apareceAlert();
-    }
-  }
-
-  apareceAlert() {
-    this.alertTitle = 'PERDISTE';
-    this.alertContent = `Has perdido esta partida. El valor de la carta era ${this.puntuacion}`;
-
-    this.showAlert = true;
-
-    this.desabilitarBotones();
-  }
-
-  reiniciarJuego() {
-    this.router
-      .navigateByUrl('refresh', { skipLocationChange: true })
-      .then(() => this.router.navigate(['juegos/mayormenor']));
-  }
-
-  desabilitarBotones() {
-    (<HTMLButtonElement>document.getElementById('btnMayor')).disabled = true;
-    (<HTMLButtonElement>document.getElementById('btnMenor')).disabled = true;
   }
 }

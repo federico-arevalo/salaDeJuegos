@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ChatService } from '../../shared/services/chat/chat.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { AuthService } from '../../shared/services/auth/auth.service';
 import moment from 'moment';
+import 'moment/locale/es';
 
 @Component({
   selector: 'app-chat',
