@@ -6,6 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { EncuestaService } from '../../shared/services/encuesta/encuesta.service';
 
 @Component({
   selector: 'app-encuesta',
@@ -27,12 +28,23 @@ export class EncuestaComponent {
     msj: new FormControl(''),
   });
 
+  constructor(private encuestaService: EncuestaService) {}
+
   public get currentUser(): string {
     return JSON.parse(localStorage.getItem('user')!).email;
   }
 
   sendEncuesta() {
-    console.log(this.encuestaForm.value);
-    console.log(this.encuestaForm.valid);
+    const encuesta = {
+      nombre: this.currentUser,
+      edad: this.encuestaForm.value.edad,
+      genero: this.encuestaForm.value.genero,
+      satisfaction: this.encuestaForm.value.satisfaction,
+      juegosfav: this.encuestaForm.value.juegosfav,
+      msj: this.encuestaForm.value.msj,
+    };
+
+    this.encuestaService.sendEncuesta(encuesta);
+    this.encuestaForm.reset();
   }
 }
