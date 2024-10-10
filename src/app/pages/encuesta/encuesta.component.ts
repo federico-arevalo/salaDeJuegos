@@ -7,15 +7,17 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { EncuestaService } from '../../shared/services/encuesta/encuesta.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-encuesta',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule],
   templateUrl: './encuesta.component.html',
   styleUrl: './encuesta.component.scss',
 })
 export class EncuestaComponent {
+  isAlertShown: boolean = false;
   encuestaForm = new FormGroup({
     nombre: new FormControl(
       { value: this.currentUser, disabled: true },
@@ -44,7 +46,15 @@ export class EncuestaComponent {
       msj: this.encuestaForm.value.msj,
     };
 
-    this.encuestaService.sendEncuesta(encuesta);
+    // this.encuestaService.sendEncuesta(encuesta);
     this.encuestaForm.reset();
+    this.showAlert();
+  }
+
+  showAlert() {
+    this.isAlertShown = true;
+    setTimeout(() => {
+      this.isAlertShown = false;
+    }, 3000);
   }
 }
