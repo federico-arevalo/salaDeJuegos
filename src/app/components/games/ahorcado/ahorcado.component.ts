@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { PuntajeService } from '../../../shared/services/puntaje/puntaje.service';
 
 @Component({
   selector: 'app-ahorcado',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './ahorcado.component.html',
   styleUrl: './ahorcado.component.scss',
 })
-export class AhorcadoComponent {
+export class AhorcadoComponent implements OnDestroy {
   teclado: any = [
     'A',
     'B',
@@ -65,15 +66,13 @@ export class AhorcadoComponent {
 
   palabraElegida: string;
   palabraConGuionesArray: any = [];
+  puntaje: number = 0;
 
-  constructor(private router: Router) {
+  constructor(private puntajeService: PuntajeService) {
     let numero: number = this.numeroRandom();
     this.palabraElegida = this.arrayPalabras[numero];
-
     this.palabraConGuionesArray = Array(this.palabraElegida.length).fill('_');
   }
-
-  ngOnInit(): void {}
 
   numeroRandom() {
     return Math.floor(Math.random() * 6);
@@ -138,9 +137,28 @@ export class AhorcadoComponent {
 
   reiniciarJuego() {
     this.showAlert = false;
-    this.router
-      .navigateByUrl('refresh', { skipLocationChange: true })
-      .then(() => this.router.navigate(['juegos/ahorcado']));
+    // this.router
+    //   .navigateByUrl('refresh', { skipLocationChange: true })
+    //   .then(() => this.router.navigate(['juegos/ahorcado']));
+
+    this.palabraElegida = this.arrayPalabras[this.numeroRandom()];
+    this.indexImagen = 0;
+    this.palabraConGuionesArray = Array(this.palabraElegida.length).fill('_');
+    this.teclado.forEach((_letter: string) => {
+      (<HTMLButtonElement>document.getElementById(_letter)).disabled = false;
+    });
+    this.puntajeService.sendPuntaje('Ahorcado', this.puntaje);
+    this.puntaje = 0;
+  }
+
+  continuarJuego() {
+    this.reiniciarJuego();
+    this.puntaje++;
+  }
+
+  ngOnDestroy(): void {
+    console.log(this.puntaje);
+    this.puntajeService.sendPuntaje('Ahorcado', this.puntaje);
   }
 
   didPlayerWin() {

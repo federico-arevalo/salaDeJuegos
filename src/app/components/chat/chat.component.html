@@ -69,7 +69,11 @@
                   </p>
                 </div>
                 <span class="text-xs text-gray-500 leading-none"
-                  >{{ message.createdAt.seconds * 1000 | date : "medium" }}
+                  >{{
+                    moment(
+                      message.createdAt.seconds * 1000 | date : "medium"
+                    ).fromNow()
+                  }}
                 </span>
               </div>
             </div>
@@ -87,7 +91,9 @@
                   </p>
                 </div>
                 <span class="text-xs text-gray-500 leading-none">{{
-                  message.createdAt.seconds * 1000 | date : "medium"
+                  moment(
+                    message.createdAt.seconds * 1000 | date : "medium"
+                  ).fromNow()
                 }}</span>
               </div>
             </div></ng-template

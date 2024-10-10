@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import {
   addDoc,
-  collection,
+  collection as c,
   Firestore,
   orderBy,
   query,
 } from '@angular/fire/firestore';
+import { collection, DocumentData, getDocs } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -23,14 +24,20 @@ export class PuntajeService {
       puntaje: puntaje,
     };
 
-    let puntajes = collection(this.firestore, 'puntajes');
+    let puntajes = c(this.firestore, 'puntajes');
     addDoc(puntajes, newPuntaje);
   }
 
-  getPuntajes() {
-    return query(
-      collection(this.firestore, 'puntajes'),
-      orderBy('createdAt', 'desc')
-    );
+  async getPuntajes() {
+    let puntajes: DocumentData[] = [];
+
+    const querySnapshot = await getDocs(collection(this.firestore, 'puntajes'));
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      // console.log(doc.data());
+      puntajes.push(doc.data());
+    });
+
+    return puntajes;
   }
 }
