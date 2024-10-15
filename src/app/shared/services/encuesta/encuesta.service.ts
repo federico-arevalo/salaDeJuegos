@@ -9,6 +9,9 @@ export class EncuestaService {
 
   sendEncuesta(encuesta: any) {
     const newEncuesta = {
+      user: encuesta.user,
+      apellido: encuesta.apellido,
+      tel: encuesta.tel,
       nombre: encuesta.nombre,
       edad: encuesta.edad,
       genero: encuesta.genero,

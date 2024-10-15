@@ -19,11 +19,24 @@ import { CommonModule } from '@angular/common';
 export class EncuestaComponent {
   isAlertShown: boolean = false;
   encuestaForm = new FormGroup({
-    nombre: new FormControl(
+    user: new FormControl(
       { value: this.currentUser, disabled: true },
       Validators.required
     ),
-    edad: new FormControl('', Validators.required),
+    nombre: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-zA-Z ]+$'),
+    ]),
+    apellido: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-zA-Z ]+$'),
+    ]),
+    tel: new FormControl('', [Validators.required, Validators.max(9999999999)]),
+    edad: new FormControl('', [
+      Validators.required,
+      Validators.min(12),
+      Validators.max(99),
+    ]),
     genero: new FormControl('', Validators.required),
     satisfaction: new FormControl('', Validators.required),
     juegosfav: new FormControl('', Validators.required),
@@ -37,8 +50,15 @@ export class EncuestaComponent {
   }
 
   sendEncuesta() {
+    this.encuestaForm.markAllAsTouched();
+
+    if (!this.encuestaForm.valid) return;
+
     const encuesta = {
-      nombre: this.currentUser,
+      user: this.currentUser,
+      nombre: this.encuestaForm.value.nombre,
+      apellido: this.encuestaForm.value.apellido,
+      tel: this.encuestaForm.value.tel,
       edad: this.encuestaForm.value.edad,
       genero: this.encuestaForm.value.genero,
       satisfaction: this.encuestaForm.value.satisfaction,

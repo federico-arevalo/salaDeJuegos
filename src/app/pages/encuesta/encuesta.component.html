@@ -25,16 +25,86 @@
     <form [formGroup]="encuestaForm">
       <div class="mb-4">
         <label for="name" class="block text-gray-700 font-medium mb-2"
-          >Nombre</label
+          >Usuario</label
         >
         <input
           [value]="currentUser"
           type="text"
-          id="name"
-          name="name"
+          id="user"
+          name="user"
+          class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400 disabled:bg-slate-300"
+          formControlName="user"
+        />
+      </div>
+      <div class="mb-4">
+        <label for="name" class="block text-gray-700 font-medium mb-2"
+          >Nombre</label
+        >
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
           class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400 disabled:bg-slate-300"
           formControlName="nombre"
+          pattern="[a-zA-Z ]*"
         />
+        <small
+          class="invalid"
+          *ngIf="
+            this.encuestaForm.controls.nombre.touched &&
+            this.encuestaForm.controls.nombre.hasError('required')
+          "
+          >El nombre es requerido</small
+        >
+      </div>
+      <div class="mb-4">
+        <label for="apellido" class="block text-gray-700 font-medium mb-2"
+          >Apellido</label
+        >
+        <input
+          type="text"
+          id="apellido"
+          name="apellido"
+          class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400 disabled:bg-slate-300"
+          formControlName="apellido"
+          pattern="[a-zA-Z ]*"
+        />
+        <small
+          class="invalid"
+          *ngIf="
+            this.encuestaForm.controls.apellido.touched &&
+            this.encuestaForm.controls.apellido.hasError('required')
+          "
+          >El apellido es requerido</small
+        >
+      </div>
+      <div class="mb-4">
+        <label for="tel" class="block text-gray-700 font-medium mb-2"
+          >Número de teléfono</label
+        >
+        <input
+          type="number"
+          id="tel"
+          name="tel"
+          class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+          formControlName="tel"
+          [maxlength]="10"
+        />
+        <small
+          class="invalid"
+          *ngIf="
+            this.encuestaForm.controls.tel.touched &&
+            this.encuestaForm.controls.tel.hasError('required')
+          "
+          >El télefono es requerido</small
+        ><small
+          class="invalid"
+          *ngIf="
+            this.encuestaForm.controls.tel.touched &&
+            this.encuestaForm.controls.tel.hasError('max')
+          "
+          >El número de teléfono debe ser de 10 carácteres numéricos</small
+        >
       </div>
       <div class="mb-4">
         <label for="age" class="block text-gray-700 font-medium mb-2"
@@ -47,6 +117,23 @@
           class="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
           formControlName="edad"
         />
+        <small
+          class="invalid"
+          *ngIf="
+            this.encuestaForm.controls.edad.touched &&
+            this.encuestaForm.controls.edad.hasError('required')
+          "
+          >La edad es requerida</small
+        >
+        <small
+          class="invalid"
+          *ngIf="
+            this.encuestaForm.controls.edad.touched &&
+            (this.encuestaForm.controls.edad.hasError('min') ||
+              this.encuestaForm.controls.edad.hasError('max'))
+          "
+          >La edad debe ser entre 18 y 99</small
+        >
       </div>
       <div class="mb-4">
         <label for="gender" class="block text-gray-700 font-medium mb-2"
@@ -63,6 +150,14 @@
           <option value="mujer">Mujer</option>
           <option value="otro">Otro</option>
         </select>
+        <small
+          class="invalid"
+          *ngIf="
+            this.encuestaForm.controls.genero.touched &&
+            this.encuestaForm.controls.genero.hasError('required')
+          "
+          >El género es requerido</small
+        >
       </div>
       <div class="mb-4">
         <label for="satisfaction" class="block text-gray-700 font-medium mb-2"
@@ -81,6 +176,14 @@
           <span id="minPrice">💩</span>
           <span id="maxPrice">😍​</span>
         </div>
+        <small
+          class="invalid"
+          *ngIf="
+            this.encuestaForm.controls.satisfaction.touched &&
+            this.encuestaForm.controls.satisfaction.hasError('required')
+          "
+          >El campo es requerido</small
+        >
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 font-medium mb-2"
@@ -142,6 +245,14 @@
             </label>
           </div>
         </div>
+        <small
+          class="invalid"
+          *ngIf="
+            this.encuestaForm.controls.juegosfav.touched &&
+            this.encuestaForm.controls.juegosfav.hasError('required')
+          "
+          >Tu juego favorito es requerido</small
+        >
       </div>
       <div class="mb-4">
         <label for="message" class="block text-gray-700 font-medium mb-2"
@@ -158,8 +269,7 @@
       <div>
         <button
           type="submit"
-          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 disabled:bg-gray-400"
-          [disabled]="!encuestaForm.valid"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
           (click)="sendEncuesta()"
         >
           Enviar
