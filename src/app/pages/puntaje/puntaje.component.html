@@ -8,6 +8,19 @@
           <div class="relative w-full px-4 max-w-full flex-grow flex-1">
             <h3 class="font-semibold text-base text-blueGray-700">Puntajes</h3>
           </div>
+          <select
+            id="gender"
+            name="gender"
+            class="border border-gray-400 p-2 rounded-lg focus:outline-none focus:border-orange-400"
+            formControlName="genero"
+            (change)="getJuego($event)"
+          >
+            <option value="todos">Seleccionar juego</option>
+            <option value="Mayor o Menor">Mayor o Menor</option>
+            <option value="Ahorcado">Ahorcado</option>
+            <option value="Preguntados">Preguntados</option>
+            <option value="Snake">Snake</option>
+          </select>
         </div>
       </div>
 
@@ -21,10 +34,16 @@
               <th
                 class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
               >
+                Puesto
+              </th>
+              <th
+                class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+              >
                 Jugador
               </th>
               <th
                 class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left"
+                *ngIf="isAllSelected"
               >
                 Juego
               </th>
@@ -43,8 +62,18 @@
               ></th>
             </tr>
           </thead>
-          <tbody *ngFor="let punto of puntos">
+          <tbody
+            *ngFor="
+              let punto of filteredPuntos || puntos.slice(0, 10);
+              index as i
+            "
+          >
             <tr>
+              <th
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
+              >
+                {{ i + 1 }}
+              </th>
               <th
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left"
               >
@@ -52,6 +81,7 @@
               </th>
               <td
                 class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4"
+                *ngIf="isAllSelected"
               >
                 {{ punto.juego }}
               </td>
